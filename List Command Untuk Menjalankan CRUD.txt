@@ -1,0 +1,6 @@
+npm init --y
+npm install --save express mysql2 sequelize cors md5 bcrypt
+npx sequelize-cli init
+(config.json)
+npx sequelize-cli model:generate --name seat --attributes eventID:integer,rowNum:string,seatNum:integer,status:boolean
+npx sequelize-cli db:migrate

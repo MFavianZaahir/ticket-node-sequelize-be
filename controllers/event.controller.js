@@ -36,6 +36,48 @@ exports.findEvent = async (request, response) => {
   });
 };
 
+// exports.addEvent = async (request, response) => {
+//   try {
+//     // Upload the file
+//     await upload(request, response);
+
+//     // Check for upload errors
+//     if (request.uploadError) {
+//       return response.json({ message: request.uploadError });
+//     }
+
+//     // Check if file is empty
+//     if (!request.file) {
+//       return response.json({ message: 'Nothing to Upload' });
+//     }
+
+//     // Extract event data from request
+//     const newEvent = {
+//       eventName: request.body.eventName,
+//       eventDate: request.body.eventDate,
+//       venue: request.body.venue,
+//       price: request.body.price,
+//       image: request.file.filename,
+//     };
+
+//     // Validate event data (optional)
+//     // You can add validation logic here to ensure required fields are present and in the correct format
+
+//     // Create new event
+//     const createdEvent = await eventModel.create(newEvent);
+
+//     // Send successful response with created event data
+//     return response.json({
+//       success: true,
+//       data: createdEvent,
+//       message: 'New event has been inserted',
+//     });
+//   } catch (error) {
+//     console.error(error); // Log the error for debugging
+//     return response.status(500).json({ message: 'Internal Server Error' });
+//   }
+// };
+
 exports.addEvent = (request, response) => {
   /** run function upload */
   upload(request, response, async (error) => {
@@ -46,8 +88,7 @@ exports.addEvent = (request, response) => {
     /** check if file is empty */
     if (!request.file) {
       return response.json({
-        message: `Nothing to
-  Upload`,
+        message: `Nothing to Upload`,
       });
     }
     /** prepare data from request */

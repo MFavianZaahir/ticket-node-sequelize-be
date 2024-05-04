@@ -1,16 +1,19 @@
 const express = require(`express`)
 const app = express()
 const cors = require(`cors`)
-const { verifyToken } = require('./middleware/authMiddleware');
+// const { verifyToken } = require('./middleware/authMiddleware');
 const userRoute = require(`./routes/user.route`)
-const authRoutes = require('./routes/authRoutes');
+// const authRoutes = require('./routes/authRoutes');
 const eventRoute = require(`./routes/event.route`)
 
 app.use(express.json());
-
+// app.post('/protected-route', verifyToken, (req, res) => {
+//     // This route requires authentication (verified by verifyToken)
+//     res.json({ message: 'Welcome authorized user!' });
+//   });
 app.use(cors())
-app.use(`/user`, userRoute)
-app.use('/auth', authRoutes);
+// app.use('/auth', authRoutes);
+app.use(`/user`, userRoute);
 app.use(`/event`, eventRoute);
 
 app.use(express.static(__dirname))

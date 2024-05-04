@@ -18,7 +18,7 @@ router.post('/signup', async (req, res) => {
 
     const newUser = await User.create({ firstName, lastName, email, password });
 
-    const token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET, { expiresIn: '1h' }); // Adjust expiration time as needed
+    const token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET, { expiresIn: '6h' }); // Adjust expiration time as needed
 
     res.status(201).json({ message: 'User created successfully', token });
   } catch (error) {

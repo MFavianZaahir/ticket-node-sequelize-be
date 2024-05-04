@@ -1,7 +1,0 @@
-npm init --y
-npm install --save express mysql2 sequelize cors md5 bcrypt jsonwebtoken
-npx sequelize-cli init
-(config.json)
-npx sequelize-cli model:generate --name ticket --attributes eventID:integer,userID:integer,seatID:integer,bookedDate:date
-npx sequelize-cli db:migrate
-npx sequelize-cli seed:generate --name sample-users 

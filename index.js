@@ -1,14 +1,17 @@
-const express = require("express") // memanggil library express js
-const bodyParser = require("body-parser") // memanggil library body-parser
-const cors = require("cors") 
+const express = require(`express`)
 const app = express()
+const cors = require(`cors`)
+const { verifyToken } = require('./middleware/authMiddleware');
+const userRoute = require(`./routes/user.route`)
+const authRoutes = require('./routes/authRoutes');
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(express.json());
+
 app.use(cors())
+app.use(`/user`, userRoute)
+app.use('/auth', authRoutes);
 
-
-app.listen(8000, () => {
-    console.log("Server run on port 8000");
-    })
-    
+const PORT = 8000
+app.listen(PORT, () => {
+    console.log(`Server of Ticket Sales runs on port ${PORT}`)
+})

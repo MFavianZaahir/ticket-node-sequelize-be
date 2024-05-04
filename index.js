@@ -4,12 +4,16 @@ const cors = require(`cors`)
 const { verifyToken } = require('./middleware/authMiddleware');
 const userRoute = require(`./routes/user.route`)
 const authRoutes = require('./routes/authRoutes');
+const eventRoute = require(`./routes/event.route`)
 
 app.use(express.json());
 
 app.use(cors())
 app.use(`/user`, userRoute)
 app.use('/auth', authRoutes);
+app.use(`/event`, eventRoute);
+
+app.use(express.static(__dirname))
 
 const PORT = 8000
 app.listen(PORT, () => {

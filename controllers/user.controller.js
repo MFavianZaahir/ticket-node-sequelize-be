@@ -35,33 +35,63 @@ exports.findUser = async (request, response) => {
   });
 };
 
-exports.addUser = (request, response) => {
-  /** prepare data from request */
-  let newUser = {
-    firstname: request.body.firstname,
-    lastname: request.body.lastname,
-    email: request.body.email,
-    password: md5(request.body.password),
-    role: request.body.role,
-  };
-  /** execute inserting data to user's table */
-  userModel
-    .create(newUser)
-    .then((result) => {
-      /** if insert's process success */
-      return response.json({
-        success: true,
-        data: result,
-        message: `New user has been inserted`,
-      });
-    })
-    .catch((error) => {
-      /** if insert's process fail */
-      return response.json({
-        success: false,
-        message: error.message,
-      });
+// exports.addUser = (request, response) => {
+//   /** prepare data from request */
+//   let newUser = {
+//     firstname: request.body.firstname,
+//     lastname: request.body.lastname,
+//     email: request.body.email,
+//     password: md5(request.body.password),
+//     role: request.body.role,
+//   };
+//   /** execute inserting data to user's table */
+//   userModel
+//     .create(newUser)
+//     .then((result) => {
+//       /** if insert's process success */
+//       return response.json({
+//         success: true,
+//         data: result,
+//         message: `New user has been inserted`,
+//       });
+//     })
+//     .catch((error) => {
+//       /** if insert's process fail */
+//       return response.json({
+//         success: false,
+//         message: error.message,
+//       });
+//     });
+// };
+
+exports.addUser = async (request, response) => {
+  try {
+    /** Prepare data from request */
+    let newUser = {
+      firstname: request.body.firstname,
+      lastname: request.body.lastname,
+      email: request.body.email,
+      password: md5(request.body.password), // Assuming md5 is a hashing function
+      role: request.body.role,
+    };
+
+    /** Execute inserting data to user's table */
+    const result = await userModel.create(newUser);
+
+    /** If insert's process succeeds */
+    return response.json({
+      success: true,
+      data: result,
+      message: "New user has been inserted",
     });
+  } catch (error) {
+    /** If insert's process fails */
+    console.error("Error creating user:", error); // Log the error for debugging
+    return response.json({
+      success: false,
+      message: "Failed to create user. Please try again.",
+    });
+  }
 };
 
 exports.updateUser = (request, response) => {

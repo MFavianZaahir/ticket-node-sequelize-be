@@ -1,4 +1,4 @@
-const userModel = require("../models/index").user;
+const userModel = require("../database/models/index").user;
 const { response } = require("express");
 const md5 = require("md5");
 const Op = require("sequelize").Op;
@@ -57,6 +57,60 @@ exports.addUser = (request, response) => {
     })
     .catch((error) => {
       /** if insert's process fail */
+      return response.json({
+        success: false,
+        message: error.message,
+      });
+    });
+};
+
+exports.updateUser = (request, response) => {
+  /** prepare data that has been changed */
+  let dataUser = {
+    firstname: request.body.firstname,
+    lastname: request.body.lastname,
+    email: request.body.email,
+    role: request.body.role,
+  };
+  if (request.body.password) {
+    dataUser.password = md5(request.body.password);
+  }
+  /** define id user that will be update */
+  let userID = request.params.id;
+  /** execute update data based on defined id user */
+  userModel
+    .update(dataUser, { where: { userID: userID } })
+    .then((result) => {
+      /** if update's process success */
+      return response.json({
+        success: true,
+        message: `Data user has been updated`,
+      });
+    })
+    .catch((error) => {
+      /** if update's process fail */
+      return response.json({
+        success: false,
+        message: error.message,
+      });
+    });
+};
+
+exports.deleteUser = (request, response) => {
+  /** define id user that will be update */
+  let userID = request.params.id;
+  /** execute delete data based on defined id user */
+  userModel
+    .destroy({ where: { userID: userID } })
+    .then((result) => {
+      /** if update's process success */
+      return response.json({
+        success: true,
+        message: `Data user has been deleted`,
+      });
+    })
+    .catch((error) => {
+      /** if update's process fail */
       return response.json({
         success: false,
         message: error.message,

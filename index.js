@@ -5,6 +5,7 @@ const cors = require(`cors`)
 const userRoute = require(`./routes/user.route`)
 // const authRoutes = require('./routes/authRoutes');
 const eventRoute = require(`./routes/event.route`)
+const ticketRoute = require(`./routes/ticket.route`)
 
 app.use(express.json());
 // app.post('/protected-route', verifyToken, (req, res) => {
@@ -15,6 +16,8 @@ app.use(cors())
 // app.use('/auth', authRoutes);
 app.use(`/user`, userRoute);
 app.use(`/event`, eventRoute);
+app.use(`/ticket`, ticketRoute)
+
 
 app.use(express.static(__dirname))
 

@@ -1,4 +1,4 @@
-const userModel = require("../database/models/index").user;
+const userModel = require("../models/index").user;
 const { response } = require("express");
 const md5 = require("md5");
 const Op = require("sequelize").Op;

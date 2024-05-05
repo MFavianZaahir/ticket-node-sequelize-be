@@ -3,7 +3,47 @@ const userModel = require(`../models/index`).user;
 const eventModel = require(`../models/index`).event;
 const ticketModel = require(`../models/index`).ticket;
 
+const { response } = require("express");
 const Op = require(`sequelize`).Op;
+
+// exports.addTicket = async (request, response) => {
+//    /** prepare date for bookedDate */
+//    const today = new Date();
+//    const bookedDate = `${today.getFullYear()}-
+//     ${today.getMonth() + 1}-${today.getDate()}
+//     ${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
+//    /** prepare data from request */
+//    const { eventID, userID, seats } = request.body;
+//    try {
+//       // Create seat records for the chosen seats
+//       const seatIDs = await Promise.all(
+//          seats.map(async (seat) => {
+//             const { rowNum, seatNum } = seat;
+//             const createdSeat = await seatModel.create({
+//                eventID,
+//                rowNum,
+//                seatNum,
+//                status: "true",
+//             });
+//             return createdSeat.seatID;
+//          })
+//       );
+//       // Create ticket records associating the chosen seats
+//       const tickets = await ticketModel.bulkCreate(
+//          seatIDs.map((seatID) => ({
+//             eventID,
+//             userID,
+//             seatID,
+//             bookedDate,
+//          })));
+//       response.status(201).json(tickets);
+//    } catch (error) {
+//       return response.json({
+//          success: false,
+//          message: error.message,
+//       });
+//    }
+// };
 
 exports.addTicket = async (request, response) => {
    /** prepare date for bookedDate */
@@ -31,11 +71,10 @@ exports.addTicket = async (request, response) => {
       const tickets = await ticketModel.bulkCreate(
          seatIDs.map((seatID) => ({
             eventID,
-            userID,
+            userID, // <--- Here userID should be added to tickets, not seats
             seatID,
             bookedDate,
-         }))
-      );
+         })));
       response.status(201).json(tickets);
    } catch (error) {
       return response.json({
@@ -44,6 +83,7 @@ exports.addTicket = async (request, response) => {
       });
    }
 };
+
 
 exports.getAllTicket = async (request, response) => {
    /** call findAll() to get all data */

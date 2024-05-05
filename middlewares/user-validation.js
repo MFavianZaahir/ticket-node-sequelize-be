@@ -1,5 +1,4 @@
-const { validationResult, body } = require(`express-
-validator`);
+const { validationResult, body } = require(`express-validator`);
 const validateUser = [
    // Validation checks for the request body
    body("firstname").notEmpty().withMessage("First Name is required"),
